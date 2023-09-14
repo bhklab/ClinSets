@@ -1,0 +1,195 @@
+---
+title: "ClinSets: A Package for Immunotherapy Clinical Trials in Cancer"
+author:
+- name: Farnoosh Abbas-Aghababazadeh
+  affiliation:
+  - &pm Bioinformatics and Computational Genomics Laboratory, Princess Margaret Cancer Center,University Health Network, Toronto, Ontario, Canada
+- name: Yacine Bareche
+  affiliation:
+  - &pm Faculty of Pharmacy, Université de Montréal, Montreal, Canada
+  - &mbp Centre de Recherche du Centre Hospitalier de l’Université de Montréal, Institut du Cancer de Montréal, Montreal, Canada
+- name: Minoru Nakano
+  affiliation:
+    - &pm Bioinformatics and Computational Genomics Laboratory, Princess Margaret Cancer Center,University Health Network, Toronto, Ontario, Canada
+- name: John Stagg
+  affiliation:
+  - &pm Faculty of Pharmacy, Université de Montréal, Montreal, Canada
+  - &mbp Centre de Recherche du Centre Hospitalier de l’Université de Montréal, Institut du Cancer de Montréal, Montreal, Canada
+- name: Benjamin Haibe-Kains
+  affiliation:
+    - &pm Bioinformatics and Computational Genomics Laboratory, Princess Margaret Cancer Center,University Health Network, Toronto, Ontario, Canada
+    - &mbp Department of Medical Biophysics, University of Toronto, Toronto, Canada
+  email: benjamin.haibe.kains@utoronto.ca
+#package: PredictioR
+output:
+  BiocStyle::html_document
+abstract: |
+  Description of your vignette
+vignette: |
+  %\VignetteIndexEntry{ClinSets: A Package for Immunotherapy Clinical Trials in Cancer}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Introduction
+
+The ClinSets package provides a collection of immunotherapy clinical trials in cancer. Please refer to the manuscript URL (https://pubmed.ncbi.nlm.nih.gov/36055464/).
+
+
+```{r library, message=FALSE}
+
+library(stringr)
+library(data.table)
+library(kableExtra)
+library(summarytools)
+library(MultiAssayExperiment)
+
+```
+
+# Load Immunotherapy Datasets 
+
+The following clinical multimodal immunotherapy datasets are also obtained from the a cloud-based [ORCESTRA](https://www.orcestra.ca/clinical_icb) platform to ensure that the curation and processing of the clinical genomic data are fully transparent and reproducible. The following datasets are used in the biomarker discovery for immunotherapy response via pan-cancer and cancer-specific analyses. 
+
+```{r load_data, eval=TRUE, results='hide', message=FALSE}
+
+app_dir <- str_split(rstudioapi::getActiveDocumentContext()$path,'ClinSets')[[1]][1]
+dir <- file.path(app_dir, 'ClinSets', "data") 
+
+```
+
+|Dataset      |Discovery / Validation |Patients [\#]  |Cancer type   |RECIST criteria |Clinical endpoints |Molecular data |PMID  |      
+|-------------|-------------|---------------|--------------|--------------|----------|----------|------|
+| Braun       | Discovery  | 181           | Kidney       | Available    | PFS/OS   |RNA/DNA   | [32472114](https://pubmed.ncbi.nlm.nih.gov/32472114/)|
+| Gide        | Validation | 41            | Melanoma     | Available    | PFS/OS   |RNA       | [30753825](https://pubmed.ncbi.nlm.nih.gov/30753825/)| 
+| Hugo        | Discovery  | 27            | Melanoma     | Available    | OS       |RNA       | [26997480](https://pubmed.ncbi.nlm.nih.gov/26997480/)| 
+| Hwang       | Discovery  | 21            | Lung         | Available    | PFS/OS   |RNA       | [31959763](https://pubmed.ncbi.nlm.nih.gov/31959763/)| 
+| Jerby_Arnon | Discovery  | 112           | Melanoma     | Available    | PFS      |RNA       | [30388455](https://pubmed.ncbi.nlm.nih.gov/30388455/)| 
+| Jung        | Discovery  | 27            | Lung         | Available    | PFS      |RNA/DNA   | [31537801](https://pubmed.ncbi.nlm.nih.gov/31537801/)| 
+| Kim         | Validation | 45            | Gastric      | Available    | None     |RNA       | [30013197](https://pubmed.ncbi.nlm.nih.gov/30013197/)| 
+| Limagne1    | Discovery  | 70            | Lung         | Available    | PFS      |RNA       | [35051357](https://pubmed.ncbi.nlm.nih.gov/35051357/)| 
+| Limagne2    | Discovery  | 26            | Lung         | Available    | PFS      |RNA       | [35051357](https://pubmed.ncbi.nlm.nih.gov/35051357/)| 
+| Liu         | Discovery  | 121           | Melanoma     | Available    | PFS/OS   |RNA/DNA   | [31792460](https://pubmed.ncbi.nlm.nih.gov/31792460/)| 
+| Miao1       | Discovery  | 33            | Kidney       | Available    | PFS/OS   |RNA/DNA   | [29301960](https://pubmed.ncbi.nlm.nih.gov/29301960/)|
+| Nathanson   | Discovery  | 24            | Melanoma     | Available    | OS       |RNA/DNA   | [27956380](https://pubmed.ncbi.nlm.nih.gov/27956380/)|
+| Padron      | Validation | 45            | Pancreas     | Available    | PFS/OS   |RNA       | [35662283](https://pubmed.ncbi.nlm.nih.gov/35662283/)|
+| Puch        | Validation | 55            | Melanoma     | Available    | None     |RNA       | [32472114](https://pubmed.ncbi.nlm.nih.gov/32472114/)|
+| Riaz        | Discovery  | 46            | Melanoma     | Available    | OS       |RNA/DNA   | [29033130](https://pubmed.ncbi.nlm.nih.gov/29033130/)|
+| Roh         | Discovery  | 16            | Melanoma     | Available    | OS       |RNA/DNA   | [28251903](https://pubmed.ncbi.nlm.nih.gov/28251903/)|
+| Shiuan      | Validation | 15            | Kidney       | Available    | None     |RNA       | [33806963](https://pubmed.ncbi.nlm.nih.gov/33806963/)|
+| Snyder      | Discovery  | 25            | Ureteral     | Available    | PFS/OS   |RNA       | [28552987](https://pubmed.ncbi.nlm.nih.gov/28552987/)|
+| Van_Allen   | Discovery  | 42            | Melanoma     | Available    | PFS/OS   |RNA/DNA   | [26359337](https://pubmed.ncbi.nlm.nih.gov/26359337/)|
+| VanDenEnde  | Validation | 35            | Esophageal   | Available    | None     |RNA       | [33504550](https://pubmed.ncbi.nlm.nih.gov/33504550/)|
+| Mariathasan | Discovery  | 195           | Bladder      | Available    | OS       |RNA/DNA   | [29443960](https://pubmed.ncbi.nlm.nih.gov/31792460/)| 
+|             | Discovery  | 67            | Kidney       |                                                      | 
+|             | NA         | 5             | Liver        |                                                      | 
+|             | NA         | 10            | Lung         |                                                      | 
+|             | Discovery  | 26            | Lymph_node   |                                                      | 
+|             | NA         | 19            | Unknown      |                                                      | 
+|             | Discovery  | 26            | Ureteral     |                                                      |
+| Total       |            | 1355          | Pan-cancer   | [GitHub](https://github.com/bhklab/ClinSets.git)     |
+
+: (\#tab:table1) Detailed overview for the immunotherapy datasets.
+
+Table \@ref(tab:table1) shows an overview of the immunotherapy datasets and the total patients (n=1355)[CHECK]. The immunotherapy dataset is stored in a SummarizedExperiment object. For RNA profiles, we utilize log2-transformed TPM (Transcripts Per Million) data from protein-coding genes. 
+
+## Data Curation Overview
+
+We take data from published studies and curated them into standardized data objects to be used for integrated data analyses.
+```{r echo=FALSE, out.width="180%"}
+knitr::include_graphics(file.path(app_dir, 'ClinSets', "data-raw/data_curation_overview.JPG"))
+```
+
+**Standardized data curation resolves inconsistencies across different datasets:**\
+
+* Various data formats: txt, csv, tsv, Excel, GEO...
+* Various identifiers: "patientid" = "patient-id" = "id" = "patient" = "unique_patient_id"
+* Unfriendly format: Newline characters, spaces, other unconventional characters
+* Multiple data parts: patient/sample metadata, multiple assay data (RNA-seq, SNV...)
+
+**The standardized data are integrated into MultiAssayExperiment object:**\
+\
+```{r echo=FALSE, out.width="180%"}
+knitr::include_graphics(file.path(app_dir, 'ClinSets', "data-raw/MAE.JPG"))
+```
+
+MultiAssayExperiment:\
+
+1. An R data object structure designed to hold multiple assay data for a set of patients/samples.
+2. Assay data can be in other R data structures such as SummarizedExperiment.
+3. Flexible: The data structure can handle assays with different number of observations.
+4. Comes with functions to work with the data.
+
+### Data Curation Process
+```{r echo=FALSE, out.width="180%"}
+knitr::include_graphics(file.path(app_dir, 'ClinSets', "data-raw/data_curation_steps.JPG"))
+```
+
+### ORCESTRA: Platform to Manage Data Curation Pipeline Executions
+The immunotherapy dataset curation pipelines were integrated and executed using the platform.\
+```{r echo=FALSE, out.width="180%"}
+knitr::include_graphics(file.path(app_dir, 'ClinSets', "data-raw/ORCESTRA.JPG"))
+```
+
+1. Each pipeline run is recorded and executed with a version controlled scripts.
+2. Uses Snakemake to manage each step in a pipeline execution.
+3. Establishes a clear association between the data and the version of code used to generate the data.
+4. Provides a web interface to increase data accessibility. [www.orcestra.ca](https://www.orcestra.ca/)
+
+### Data Curation Example: VanDenEnde
+
+The scripts uses immunotherapy_VanDenEnde data curation pipeline as an example. The rest of the datasets follow the same workflow.\
+The pipeline is available in: [ICB_VanDenEnde-snakemake](https://github.com/BHKLAB-DataProcessing/ICB_VanDenEnde-snakemake)\
+There are common functions used across all immunotherapy dataset curation pipelines which are available in [ICB_Common](https://github.com/BHKLAB-DataProcessing/ICB_Common)\
+\
+The pipeline is organized in 4 steps:\
+
+1. Downloads data from the publication source
+2. Formats the downloaded data
+3. Processes the formatted data into common data format across all immunotherapy datasets
+4. Creates MultiAssayExperiment object\
+
+
+As an example, the Van_Allen immunotherapy dataset with PMID [32472114](https://pubmed.ncbi.nlm.nih.gov/32472114/) includes RNA expression, clinical characteristics, and gene meta data. 42 patients have both clinical data and RNA expression data. In addition, the Van_Allen dataset has 20,242 protein-coding genes. 
+
+```{r load Van_Allen data}
+
+app_dir <- str_split(rstudioapi::getActiveDocumentContext()$path,'ClinSets')[[1]][1]
+dir <- file.path(app_dir, 'ClinSets', "data") 
+
+# gene expression, clinical characteristics, and gene meta data 
+load(file.path(dir, "ICB_Van_Allen__Melanoma.rda")) 
+expr <- assay(dat_icb)
+clin <- colData(dat_icb) %>% as.data.frame()
+annot <- rowData(dat_icb) %>% as.data.frame()
+
+# number of protein-coding genes and patients
+dim(expr)
+
+```
+
+The detailed clinical characteristics of the Van_Allen dataset including cancer type, age, sex, response (R vs. NR), overall survival (OS), and progression-free survival (PFS). The summary table represents that in the Van_Allen dataset less than 10\% of the response data is missing, while no missing for survival variables. Additionally, almost 67\% of patients are male. Note that "R" and "NR" represent responder and non-responder, respectively.  
+
+```{r Van_Allen clinical data summary}
+
+# summary table of selected clinical variable 
+sub_clin <- clin[, c("age","sex", "response","survival_time_os", "survival_time_pfs")]
+
+print(dfSummary(sub_clin, 
+                style = "grid", 
+                plain.ascii = FALSE, 
+                graph.col = FALSE), 
+      method = 'render')
+
+```
+
+
+# References
+
+Bareche, Y., Kelly, D., Abbas-Aghababazadeh, F., Nakano, M., Esfahani, P. N., Tkachuk, D., ... & Stagg, J. (2022). Leveraging big data of immune checkpoint blockade response identifies novel potential targets. Annals of Oncology, 33(12), 1304-1317.\
+
+
+# SessionInfo
+
+```{r sessionInfo, echo=FALSE}
+#sessionInfo()
+```
