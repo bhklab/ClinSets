@@ -1,5 +1,5 @@
 ---
-title: "ClinSets: A Package for Immunotherapy Clinical Trials in Cancer"
+title: "ClinSets: A Package for Multimodal Clinical Trials for Cancer Patients focused on Immunotherapy"
 author:
 - name: Farnoosh Abbas-Aghababazadeh
   affiliation:
@@ -26,15 +26,14 @@ output:
 abstract: |
   Description of your vignette
 vignette: |
-  %\VignetteIndexEntry{ClinSets: A Package for Immunotherapy Clinical Trials in Cancer}
+  %\VignetteIndexEntry{ClinSets: A Package for Multimodal Clinical Trials for Cancer Patients focused on Immunotherapy}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 # Introduction
 
-The ClinSets package provides a collection of immunotherapy clinical trials in cancer. Please refer to the manuscript URL (https://pubmed.ncbi.nlm.nih.gov/36055464/).
-
+The ClinSets R data package provides a repository of multimodal clinical trials for cancer patients focused on immunotherapy. Please refer to the manuscript URL (https://pubmed.ncbi.nlm.nih.gov/36055464/).
 
 ```{r library, message=FALSE}
 
@@ -48,7 +47,7 @@ library(MultiAssayExperiment)
 
 # Load Immunotherapy Datasets 
 
-The following clinical multimodal immunotherapy datasets are also obtained from the a cloud-based [ORCESTRA](https://www.orcestra.ca/clinical_icb) platform to ensure that the curation and processing of the clinical genomic data are fully transparent and reproducible. The following datasets are used in the biomarker discovery for immunotherapy response via pan-cancer and cancer-specific analyses. 
+The following clinical immunotherapy datasets are also obtained from the a cloud-based [ORCESTRA](https://www.orcestra.ca/clinical_icb) platform to ensure that the curation and processing of the clinical genomic data are fully transparent and reproducible. The following datasets are used in the biomarker discovery for immunotherapy response via pan-cancer and cancer-specific analyses. 
 
 ```{r load_data, eval=TRUE, results='hide', message=FALSE}
 
