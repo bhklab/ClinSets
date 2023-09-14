@@ -89,7 +89,7 @@ dir <- file.path(app_dir, 'ClinSets', "data")
 
 : (\#tab:table1) Detailed overview for the immunotherapy datasets.
 
-Table \@ref(tab:table1) shows an overview of the immunotherapy datasets and the total patients (n=1355)[CHECK]. The immunotherapy dataset is stored in a SummarizedExperiment object. For RNA profiles, we utilize log2-transformed TPM (Transcripts Per Million) data from protein-coding genes. 
+Table \@ref(tab:table1) shows an overview of the immunotherapy datasets and the total patients (n=1355). The immunotherapy dataset is stored in a SummarizedExperiment object. For RNA profiles, we utilize log2-transformed TPM (Transcripts Per Million) data from protein-coding genes. 
 
 ## Data Curation Overview
 
