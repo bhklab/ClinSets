@@ -89,7 +89,7 @@ dir <- file.path(app_dir, 'ClinSets', "data")
 
 : (\#tab:table1) Detailed overview for the immunotherapy datasets.
 
-Table \@ref(tab:table1) shows an overview of the immunotherapy datasets and the total patients (n=1355). The immunotherapy dataset is stored in a SummarizedExperiment object. For RNA profiles, we utilize log2-transformed TPM (Transcripts Per Million) data from protein-coding genes. 
+Table \@ref(tab:table1) shows an overview of the immunotherapy datasets and the total patients (n=1355). The immunotherapy dataset is stored in a SummarizedExperiment class. For RNA profiles, we utilize log2-transformed TPM (Transcripts Per Million) data from protein-coding genes. 
 
 ## Data Curation Overview
 
@@ -148,7 +148,7 @@ The pipeline is organized in 4 steps:\
 4. Creates MultiAssayExperiment object\
 
 
-As an example, the Van_Allen immunotherapy dataset with PMID [32472114](https://pubmed.ncbi.nlm.nih.gov/32472114/) includes RNA expression, clinical characteristics, and gene meta data. 42 patients have both clinical data and RNA expression data. In addition, the Van_Allen dataset has 20,242 protein-coding genes. 
+As an example, the Van_Allen (Melanoma) immunotherapy dataset with PMID [26359337](https://pubmed.ncbi.nlm.nih.gov/26359337/) includes RNA expression, clinical characteristics, and gene meta data. 42 patients have both clinical data and RNA expression data. In addition, the Van_Allen dataset has 20,242 protein-coding genes. 
 
 ```{r load Van_Allen data}
 
@@ -163,6 +163,10 @@ annot <- rowData(dat_icb) %>% as.data.frame()
 
 # number of protein-coding genes and patients
 dim(expr)
+
+# summarizedExperiment class
+
+print(dat_icb)
 
 ```
 
