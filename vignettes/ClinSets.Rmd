@@ -1,5 +1,5 @@
 ---
-title: "ClinSets: A Package for Multimodal Clinical Trials for Cancer Patients focused on Immunotherapy"
+title: "ClinSets: A Package for Multimodal Clinical Trials in Cancer Patients with a Focus on Immunotherapy"
 author:
 - name: Farnoosh Abbas-Aghababazadeh
   affiliation:
@@ -33,7 +33,7 @@ vignette: |
 
 # Introduction
 
-The ClinSets R data package provides a repository of multimodal clinical trials for cancer patients focused on immunotherapy. Please refer to the manuscript URL (https://pubmed.ncbi.nlm.nih.gov/36055464/).
+The ClinSets R data package provides a repository of multimodal clinical trials in cancer patients with focused on immunotherapy. Please refer to the manuscript URL (https://pubmed.ncbi.nlm.nih.gov/36055464/).
 
 ```{r library, message=FALSE}
 
