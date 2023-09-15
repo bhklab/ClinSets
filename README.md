@@ -1,4 +1,4 @@
-# ClinSets: A Package for Multimodal Clinical Trials for Cancer Patients focused on Immunotherapy
+# ClinSets: A Package for Multimodal Clinical Trials in Cancer Patients with a Focus on Immunotherapy
 
 The ClinSets R data package provides a repository of multimodal clinical trials for cancer patients focused on immunotherapy. Please refer to the manuscript URL (https://pubmed.ncbi.nlm.nih.gov/36055464/). 
 
