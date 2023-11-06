@@ -73,19 +73,14 @@ dir <- file.path(app_dir, 'ClinSets', "data")
 | Padron      | Validation | 45            | Pancreas     | Available    | PFS/OS   |RNA       | [35662283](https://pubmed.ncbi.nlm.nih.gov/35662283/)|
 | Puch        | Validation | 55            | Melanoma     | Available    | None     |RNA       | [32472114](https://pubmed.ncbi.nlm.nih.gov/32472114/)|
 | Riaz        | Discovery  | 46            | Melanoma     | Available    | OS       |RNA/DNA   | [29033130](https://pubmed.ncbi.nlm.nih.gov/29033130/)|
-| Roh         | Discovery  | 16            | Melanoma     | Available    | OS       |RNA/DNA   | [28251903](https://pubmed.ncbi.nlm.nih.gov/28251903/)|
-| Shiuan      | Validation | 15            | Kidney       | Available    | None     |RNA       | [33806963](https://pubmed.ncbi.nlm.nih.gov/33806963/)|
 | Snyder      | Discovery  | 25            | Ureteral     | Available    | PFS/OS   |RNA       | [28552987](https://pubmed.ncbi.nlm.nih.gov/28552987/)|
 | Van_Allen   | Discovery  | 42            | Melanoma     | Available    | PFS/OS   |RNA/DNA   | [26359337](https://pubmed.ncbi.nlm.nih.gov/26359337/)|
 | VanDenEnde  | Validation | 35            | Esophageal   | Available    | None     |RNA       | [33504550](https://pubmed.ncbi.nlm.nih.gov/33504550/)|
 | Mariathasan | Discovery  | 195           | Bladder      | Available    | OS       |RNA/DNA   | [29443960](https://pubmed.ncbi.nlm.nih.gov/31792460/)| 
 |             | Discovery  | 67            | Kidney       |                                                      | 
-|             | NA         | 5             | Liver        |                                                      | 
-|             | NA         | 10            | Lung         |                                                      | 
 |             | Discovery  | 26            | Lymph_node   |                                                      | 
-|             | NA         | 19            | Unknown      |                                                      | 
 |             | Discovery  | 26            | Ureteral     |                                                      |
-| Total       |            | 1355          | Pan-cancer   | [GitHub](https://github.com/bhklab/ClinSets.git)     |
+| Total       |            | ~1300         | Pan-cancer   | [GitHub](https://github.com/bhklab/ClinSets.git)     |
 
 : (\#tab:table1) Detailed overview for the immunotherapy datasets.
 
@@ -156,7 +151,7 @@ app_dir <- str_split(rstudioapi::getActiveDocumentContext()$path,'ClinSets')[[1]
 dir <- file.path(app_dir, 'ClinSets', "data") 
 
 # gene expression, clinical characteristics, and gene meta data 
-load(file.path(dir, "ICB_Van_Allen__Melanoma.rda")) 
+load(file.path(dir, "ICB_Van_Allen__Melanoma__CTLA4.rda")) 
 expr <- assay(dat_icb)
 clin <- colData(dat_icb) %>% as.data.frame()
 annot <- rowData(dat_icb) %>% as.data.frame()
